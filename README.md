@@ -16,10 +16,6 @@ For the purposes of not unintentionally flooding BFRO with HTML pull requests, t
 
 You will need Python 3 installed, which can be downloaded at https://www.python.org/downloads/
 
-You will need BeautifulSoup installed through PIP3.
-
-You will need PyQt5, which can also be installed through PIP3
-
 ### Updates to Come
 
 This is a very barebones program atm, and is first software ever written, and I am learning as I go. Even this Readme is nowhere near complete or finalized.

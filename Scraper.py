@@ -4,16 +4,23 @@ from bs4 import BeautifulSoup
 import requests
 from urllib.request import urlopen as uReq
 import time
+from pathlib import Path
+import os.path
+import sys
 
 # Main URLs
 url_BFRO_Home = 'https://www.bfro.net/GDB/#usa'
 url_BFRO_Base = 'https://www.bfro.net'
 url_BFRO_Base2 = 'https://www.bfro.net/GDB/'
 
-page = open('ReportDump.txt', 'a')
-page.write('')
-page.close()
-
+if os.path.isfile('DataDump.txt'):
+    print('File exists')
+    DataFile = open('DataDump.txt','w')
+    DataFile.close()
+else:
+    print('File does not exist')
+    CheckDataFile = open("DataDump.txt","w+")
+    CheckDataFile.close()
 
 # Pulling from BFRO Home Site
 Site_BFRO_Home = uReq(url_BFRO_Home)
@@ -53,7 +60,7 @@ for StatePull in States_Links:
     Soup_02_Counties = Soup_02_Table[3:]
     Soup_02_Counties_String = [str(n1) for n1 in Soup_02_Counties]
 
-    # Breaks Counties down into links.
+    # === Breaks Counties down into links. ===
     # first by splitting and separating link from rest of code
     Counties_Partial1 = [n2.split('"') for n2 in Soup_02_Counties_String]
     Counties_Partial2 = [n3[1:2] for n3 in Counties_Partial1]
@@ -62,7 +69,8 @@ for StatePull in States_Links:
     # Then removing last bit of excess characters from each item string to make into partial link
     Counties_Partial4 = [n5[2:-2] for n5 in Counties_Partial3]
     Counties_Partial5 = [n6.replace('amp;', '') for n6 in Counties_Partial4]
-
+    # === Done Breaking down into links ===
+    #
     # Finally, combine url_BFRO_Base2 link with end link, to combine in new list with all 1552 links.
     # Damn yea, that's a lot of links. Don't worry, still got another layer.
 
@@ -126,7 +134,7 @@ for StatePull in States_Links:
 
                 # Now to put every string into document.
 
-                page = open('ReportDump.txt', 'a')
+                page = open('DataDump.txt', 'a')
                 for writingpage in Data_Partial_6:
 
                     page.write(writingpage)
@@ -139,4 +147,4 @@ for StatePull in States_Links:
                 page.close()
 
                 # How fast this bitch gonna run.
-                time.sleep(2)
+                time.sleep(0.5)
